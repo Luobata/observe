@@ -1,5 +1,4 @@
-import * as observe from './observe/index';
+export * from './observe/index';
 
 //module.exports = observe;
 
-export * from observe;
