@@ -5,6 +5,7 @@ import Dep, {
 
 export default class Watcher {
     model: Object;
+    target: Object;
     deps: Array<Dep>;
     newDeps: Array<Dep>;
     depIds: Set;
@@ -13,10 +14,12 @@ export default class Watcher {
     getter: Function;
 
     constructor(
-        model: Object,
         getter: Function,
+        model: Object,
+        name: String,
     ) {
         this.model = model;
+        this.target = model[name];
         this.deps = [];
         this.newDeps = [];
         this.depIds = new Set();
@@ -30,7 +33,7 @@ export default class Watcher {
     get() {
         // 依赖收集
         pushTarget(this);
-        const value = this.getter.call(this.model);
+        const value = this.getter.call(this.target, this.model);
         popTarget();
         this.cleanDeps();
     }
@@ -57,7 +60,7 @@ export default class Watcher {
     };
 
     update() {
-        this.value = this.getter.call(this.model);
+        this.value = this.getter.call(this.target, this.model);
     };
 
     addDepend(dep: Dep) {

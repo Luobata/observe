@@ -5,7 +5,7 @@ import {
     noop,
 }  from 'UTIL/index';
 import Watcher from './watcher';
-import Dep from './Dep';
+import Dep from './dep';
 
 let observeObj = {};
 
@@ -35,8 +35,8 @@ export class Observe {
             Object.defineProperty(observeObj[name], i, {
                 enumerable: true,
                 configurable: true,
-                get: (function get (fun, model) {
-                    const watcher = new Watcher(model, fun, noop);
+                get: (function get (fun, model, name) {
+                    const watcher = new Watcher(fun, model, name);
                     return function getter() {
                         if (watcher.lazy) {
                             watcher.evaluate();
@@ -47,7 +47,7 @@ export class Observe {
 
                         return watcher.value;
                     };
-                })($computed[i], observeObj[name]),
+                })($computed[i], observeObj, name),
                 set: noop,
             });
         }
