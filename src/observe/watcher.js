@@ -36,6 +36,8 @@ export default class Watcher {
         const value = this.getter.call(this.target, this.model);
         popTarget();
         this.cleanDeps();
+
+        return value;
     }
 
     cleanDeps() {

@@ -8,6 +8,10 @@ class wrap extends Observe {
         this.height = 1;
         super.observe(this);
     }
+
+    addHeight() {
+        this.height = 2;
+    }
 };
 
 class canvas extends Observe {
@@ -26,5 +30,6 @@ class canvas extends Observe {
     }
 };
 
-new wrap();
-new canvas();
+const w = new wrap();
+const c = new canvas();
+w.addHeight();
