@@ -7,6 +7,8 @@ import {
 import Watcher from './watcher';
 import Dep from './Dep';
 
+let observeObj = {};
+
 export class Observe {
     constructor() {
     };
@@ -14,7 +16,8 @@ export class Observe {
     observe(target: Object) {
         console.log(target);
         const name = target.constructor.name;
-        this[name] = target;
+        //this[name] = target;
+        observeObj[name] = target;
 
         if (has(target, '$computed') && isObj(target['$computed'])) {
             this.initComputed(target['$computed'], name);
@@ -25,11 +28,11 @@ export class Observe {
         for (let i in $computed) {
             if (!has($computed, i)) continue;
             if (!isFun($computed[i])) {
-                new Error(`${this[name]} computed value ${i} is not a function`);
+                new Error(`${observeObj[name]} computed value ${i} is not a function`);
                 continue;
             }
-            $computed[i].call(this[name]);
-            Object.defineProperty(this[name], i, {
+            $computed[i].call(observeObj[name], observeObj);
+            Object.defineProperty(observeObj[name], i, {
                 enumerable: true,
                 configurable: true,
                 get: (function get (fun, model) {
@@ -44,7 +47,7 @@ export class Observe {
 
                         return watcher.value;
                     };
-                })($computed[i], this[name]),
+                })($computed[i], observeObj[name]),
                 set: noop,
             });
         }

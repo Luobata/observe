@@ -17,8 +17,8 @@ class canvas extends Observe {
         //@observe;
 
         this.$computed = {
-            height () {
-                return super.wrap.height + 1;
+            height (data) {
+                return data.wrap.height + 1;
             }
         };
 
