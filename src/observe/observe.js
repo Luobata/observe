@@ -1,9 +1,7 @@
 import Dep from './dep';
-
-export class Observer {
-    constructor($data: Object, target: Object) {
-    };
-};
+import {
+    has,
+} from 'UTIL/index';
 
 const defineProperty = (
     obj: Object,
@@ -15,7 +13,7 @@ const defineProperty = (
     
     const property = Object.getOwnPropertyDescriptor(obj, key);
     const getter = property && property.get;
-    const setter = property && propery.set;
+    const setter = property && property.set;
 
     Object.defineProperty(obj, key, {
         enumerable: true,
@@ -27,6 +25,7 @@ const defineProperty = (
             if (setter) {
                 setter.call(obj);
             } else {
+                val = newV;
             }
             dep.notify();
         },
@@ -39,4 +38,13 @@ const defineProperty = (
             return value;
         }
     });
+};
+
+export default class Observer {
+    constructor($data: Object, target: Object) {
+        for (let i in $data) {
+            if (!has($data, i)) continue;
+            defineProperty(target, i, $data[i]);
+        }
+    };
 };

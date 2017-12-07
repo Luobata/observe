@@ -32,7 +32,7 @@ export default class Dep {
     }
 
     notify() {
-        for (let i = 0; i < this.wathcer.length; i++) {
+        for (let i = 0; i < this.watcher.length; i++) {
             this.watcher[i].update();
         }
     }

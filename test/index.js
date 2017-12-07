@@ -6,6 +6,7 @@ class wrap extends Observe {
         super();
         console.log(this);
         this.height = 1;
+        this.weight = 2;
         super.observe(this);
     }
 
