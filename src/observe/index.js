@@ -50,7 +50,6 @@ export class Observe {
                 get: (function get (fun, model, name) {
                     const watcher = new Watcher(fun, model, name);
                     return function getter() {
-                        debugger;
                         if (watcher.lazy) {
                             watcher.evaluate();
                         }
@@ -65,6 +64,10 @@ export class Observe {
             });
         }
     };
+};
+
+Observe.getValue = function getValue () {
+    console.log(1);
 };
 
 export const observe = (

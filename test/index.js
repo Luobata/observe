@@ -30,7 +30,25 @@ class canvas extends Observe {
         super.observe(this);
     }
 };
+class canvasWrap extends Observe {
+    constructor() {
+        super();
+        console.log(this);
+        //@observe;
+
+        this.$computed = {
+            height (data) {
+                //return data.wrap.height + 1 + data.canvas.height;
+            }
+        };
+
+        super.observe(this);
+    }
+};
 
 const w = new wrap();
+const cw = new canvasWrap();
 const c = new canvas();
+console.log(cw.height);
 w.addHeight();
+Observe.getValue();
