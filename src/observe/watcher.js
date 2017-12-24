@@ -44,7 +44,7 @@ export default class Watcher {
 
     cleanDeps() {
         for (let i = 0; i < this.deps.length; i++) {
-            if (!this.newDepIds.has(this.deps[i].id)) {
+            if (!this.newDepIds.has(this.deps[i].uid)) {
                 this.deps[i].removeWatcher(this);
             }
         }
@@ -62,9 +62,6 @@ export default class Watcher {
         this.newDeps = tmp;
         this.newDeps.length = 0;
     };
-
-    evaluate() {
-    }
 
     update() {
         this.value = this.getter.call(this.target, this.model);
