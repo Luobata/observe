@@ -17,9 +17,11 @@ export default class Watcher {
         getter: Function,
         model: Object,
         name: String,
+        lazy: Boolean,
     ) {
         this.model = model;
         this.target = model[name];
+        this.lazy = lazy;
         this.deps = [];
         this.newDeps = [];
         this.depIds = new Set();
@@ -27,7 +29,7 @@ export default class Watcher {
         this.expression = getter.toString();
         this.getter = getter;
 
-        this.value = this.get();
+        if (!this.lazy) this.value = this.get();
     };
 
     get() {
@@ -60,6 +62,9 @@ export default class Watcher {
         this.newDeps = tmp;
         this.newDeps.length = 0;
     };
+
+    evaluate() {
+    }
 
     update() {
         this.value = this.getter.call(this.target, this.model);

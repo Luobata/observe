@@ -11,7 +11,7 @@ class wrap extends Observe {
     }
 
     addHeight() {
-        this.height = 2;
+        this.height++;
     }
 };
 
@@ -22,8 +22,11 @@ class canvas extends Observe {
         //@observe;
 
         this.$computed = {
-            height (data) {
-                return data.wrap.height + 1;
+            height: {
+                value (data) {
+                    return data.wrap.height + 1;
+                },
+                lazy: false,
             }
         };
 
@@ -37,9 +40,12 @@ class canvasWrap extends Observe {
         //@observe;
 
         this.$computed = {
-            height (data) {
-                //return data.wrap.height + 1 + data.canvas.height;
-            }
+            height: {
+                value (data) {
+                    return data.wrap.height + 1 + data.canvas.height;
+                },
+                lazy: true,
+            },
         };
 
         super.observe(this);
@@ -52,3 +58,4 @@ const c = new canvas();
 console.log(cw.height);
 w.addHeight();
 Observe.getValue();
+w.addHeight();
